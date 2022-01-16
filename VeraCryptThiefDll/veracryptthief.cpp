@@ -1,3 +1,12 @@
+/*
+
+ Red Team Operator code template
+ Target app for hooking
+
+ author: reenz0h (twitter: @SEKTOR7net)
+
+*/
+
 #include <stdio.h>
 #include <windows.h>
 #include "detours.h"
