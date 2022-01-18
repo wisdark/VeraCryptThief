@@ -39,3 +39,5 @@ obj.*
 /bin.*
 *.vcxproj.FileListAbsolute.txt
 *.vcxprojAssemblyReference.cache
+
+!/lib.X64/detours.lib
