@@ -16,14 +16,14 @@ BOOL Hookem(void);
 BOOL UnHookem(void);
 
 int (WINAPI * pOrigWideCharToMultiByte)(
-  UINT                               CodePage,
-  DWORD                              dwFlags,
-  _In_NLS_string_(cchWideChar)LPCWCH lpWideCharStr,
-  int                                cchWideChar,
-  LPSTR                              lpMultiByteStr,
-  int                                cbMultiByte,
-  LPCCH                              lpDefaultChar,
-  LPBOOL                             lpUsedDefaultChar
+	UINT                               CodePage,
+	DWORD                              dwFlags,
+	_In_NLS_string_(cchWideChar)LPCWCH lpWideCharStr,
+	int                                cchWideChar,
+	LPSTR                              lpMultiByteStr,
+	int                                cbMultiByte,
+	LPCCH                              lpDefaultChar,
+	LPBOOL                             lpUsedDefaultChar
 ) = WideCharToMultiByte;
 
 int HookedWideCharToMultiByte(
@@ -45,6 +45,18 @@ int HookedWideCharToMultiByte(
 		cbMultiByte,
 		lpDefaultChar,
 		lpUsedDefaultChar);
+
+	if (lpMultiByteStr != NULL) {
+		int len = 10;
+
+		if (strlen(lpMultiByteStr) < len)
+			len = strlen(lpMultiByteStr);
+
+		for (int i = 0; i < len-1; i++)
+			if (!isprint(lpMultiByteStr[i]))
+				return ret;
+	}
+	else return ret;
 
 	char buffer[1024];
 	sprintf(buffer, "DATA = %s\n", lpMultiByteStr);
